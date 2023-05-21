@@ -4,10 +4,11 @@ import { ShortLinkController } from './transportLayer/web/shortLink.controller';
 import { ShortLinkRepositoryName } from './domain/repository/shortLink.repository';
 import PrismaShortLinkRepository from './infrastructure/datasources/prismaShortLink.repository';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { RedirectController } from './transportLayer/web/redirectController';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [ShortLinkController],
+  controllers: [ShortLinkController, RedirectController],
   providers: [
     ShortLinkService,
     {
