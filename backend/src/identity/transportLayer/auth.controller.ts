@@ -2,7 +2,7 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { IdentityService } from '../domain/identity.service';
 
 @Controller('auth')
-export class IdentityController {
+export class AuthController {
   constructor(private readonly identityService: IdentityService) {}
 
   @Post('login')

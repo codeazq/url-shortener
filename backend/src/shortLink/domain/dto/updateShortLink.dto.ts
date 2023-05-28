@@ -5,10 +5,11 @@ export class UpdateShortLinkInputDto {
 }
 
 export class UpdateShortLinkOuptDto {
-  id: number;
+  id: bigint;
   url: string;
   alias: string;
   published: boolean;
+  userId: bigint;
   createdAt: Date;
   updatedAt: Date;
 }

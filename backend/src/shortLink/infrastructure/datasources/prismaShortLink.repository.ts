@@ -25,6 +25,7 @@ export default class PrismaShortLinkRepository implements ShortLinkRepository {
         where: { alias: createShortLinkInputDto.alias },
         update: {},
         create: {
+          userId: createShortLinkInputDto.userId,
           url: createShortLinkInputDto.url,
           alias: createShortLinkInputDto.alias,
           published: createShortLinkInputDto.published,
@@ -37,6 +38,12 @@ export default class PrismaShortLinkRepository implements ShortLinkRepository {
     try {
       return await this.prismaService.shortLink.findMany();
     } catch (error) {}
+  }
+
+  async findManyByUserId(
+    userId: bigint | number,
+  ): Promise<FindShortLinkOutputDto[]> {
+    return await this.prismaService.shortLink.findMany({ where: { userId } });
   }
 
   async find(id: number): Promise<FindShortLinkOutputDto> {

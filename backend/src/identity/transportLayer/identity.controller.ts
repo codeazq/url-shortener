@@ -1,6 +1,14 @@
-import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { IdentityService } from '../domain/identity.service';
-
+import { JwtAuthGuard } from '../utils/jwtAuth.guard';
 import {
   UpdateUserRequestDto,
   UpdateUserResponseDto,
@@ -10,6 +18,7 @@ import {
 export class IdentityController {
   constructor(private readonly identityService: IdentityService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Patch()
   update(
     @Body() updateUserRequestDto: UpdateUserRequestDto,
@@ -17,6 +26,7 @@ export class IdentityController {
     return this.identityService.update(updateUserRequestDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.identityService.remove(+id);

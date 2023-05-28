@@ -7,6 +7,10 @@ export default class NestJWTService implements JWTService {
   constructor(private readonly nestJwtService: NestJwtService) {}
 
   async sign(payload: string | object): Promise<string> {
-    return await this.nestJwtService.signAsync(payload);
+    try {
+      return await this.nestJwtService.signAsync(payload);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -12,7 +12,8 @@ import { DeleteShortLinkOutputDto } from './dto/deleteShortLink.dto';
 import ShortLinkRepository, {
   ShortLinkRepositoryName,
 } from './repository/shortLink.repository';
-
+import { ShortLinkException } from 'src/utilities/ShortLinkException';
+import { StatusCodes } from 'http-status-codes';
 @Injectable()
 export class ShortLinkService {
   constructor(
@@ -28,36 +29,76 @@ export class ShortLinkService {
     } catch (error) {}
   }
 
-  async findAll(): Promise<FindShortLinkOutputDto[]> {
+  async findAll(userId: bigint | number): Promise<FindShortLinkOutputDto[]> {
     try {
-      return await this.shortLinkRepository.findMany();
-    } catch (error) {}
+      return await this.shortLinkRepository.findManyByUserId(userId);
+    } catch (error) {
+      throw error;
+    }
   }
 
-  async findOne(id: number): Promise<FindShortLinkOutputDto> {
+  async findOne(
+    id: number,
+    userId: bigint | number,
+  ): Promise<FindShortLinkOutputDto> {
     try {
-      return await this.shortLinkRepository.find(id);
-    } catch (error) {}
+      const shortLink = await this.shortLinkRepository.find(id);
+      console.log(`current userId: ${userId}`);
+      console.log(`shortlink userId: ${shortLink.userId}`);
+      if (shortLink.userId != userId)
+        throw new ShortLinkException(
+          'The shortLink was not created by this user',
+          StatusCodes.FORBIDDEN,
+        );
+
+      return shortLink;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findOneByAlias(alias: string): Promise<FindShortLinkOutputDto> {
     try {
       return await this.shortLinkRepository.findByAlias(alias);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
   async update(
     id: number,
     updateShortLinkInputDto: UpdateShortLinkInputDto,
+    userId: bigint | number,
   ): Promise<UpdateShortLinkOuptDto> {
     try {
+      const shortLink = await this.shortLinkRepository.find(id);
+
+      if (shortLink.userId != userId)
+        throw new ShortLinkException(
+          'The shortLink was not created by this user',
+          StatusCodes.FORBIDDEN,
+        );
+
       return await this.shortLinkRepository.update(id, updateShortLinkInputDto);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
-  async remove(id: number): Promise<DeleteShortLinkOutputDto> {
+  async remove(
+    id: number,
+    userId: bigint | number,
+  ): Promise<DeleteShortLinkOutputDto> {
     try {
+      const shortLink = await this.shortLinkRepository.find(id);
+      if (shortLink.userId != userId)
+        throw new ShortLinkException(
+          'The shortLink was not created by this user',
+          StatusCodes.FORBIDDEN,
+        );
       return await this.shortLinkRepository.delete(id);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 }

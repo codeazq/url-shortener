@@ -39,7 +39,6 @@ export class IdentityService {
         iss: process.env.APP_NAME || 'url_shortner',
         sub: user.id,
         iat: new Date().getTime(),
-        exp: new Date().setDate(new Date().getDate() + 1),
       };
       // generate an jwt access token for the user
       const jwtToken = await this.jwtService.sign(jwtPayload);

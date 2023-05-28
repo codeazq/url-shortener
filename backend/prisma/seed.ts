@@ -8,6 +8,7 @@ async function main() {
     where: { email: 'testmail@testmail.com' },
     update: {},
     create: {
+      id: 1,
       email: 'testmail@testmail.com',
       username: 'sandstorm',
       provider: 'testmail',

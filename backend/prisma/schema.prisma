@@ -11,7 +11,7 @@ datasource db {
 }
 
 model ShortLink {
-  id        BigInt  @id @default(autoincrement())
+  id        BigInt  @id @default(autoincrement()) @db.BigInt
   url       String  @db.VarChar(1500)
   alias     String  @unique
   published Boolean @default(true)
@@ -20,14 +20,14 @@ model ShortLink {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   user   User   @relation(fields: [userId], references: [id])
-  userId BigInt
+  userId BigInt @db.BigInt
 
   @@index([alias])
   @@map("short_links")
 }
 
 model User {
-  id       BigInt  @id @default(autoincrement())
+  id       BigInt  @id @default(autoincrement()) @db.BigInt
   email    String  @unique
   username String?
   provider String
