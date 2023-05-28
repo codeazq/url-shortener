@@ -20,6 +20,9 @@ export class UpdateShortLinkRequestDto {
 
 export class UpdateShortLinkResponseDto {
   @ApiProperty()
+  id: bigint;
+
+  @ApiProperty()
   url: string;
 
   @ApiProperty()

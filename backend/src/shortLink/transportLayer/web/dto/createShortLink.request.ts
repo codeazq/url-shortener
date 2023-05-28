@@ -22,6 +22,9 @@ export class CreateShortLinkRequestDto {
 
 export class CreateShortLinkResponseDto {
   @ApiProperty()
+  id: bigint;
+
+  @ApiProperty()
   url: string;
 
   @ApiProperty()

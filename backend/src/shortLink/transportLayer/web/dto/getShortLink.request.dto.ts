@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class FindShortLinkResponseDto {
   @ApiProperty()
+  id: bigint;
+
+  @ApiProperty()
   url: string;
 
   @ApiProperty()
