@@ -10,6 +10,7 @@ import GoogleAuthService, {
   GoogleAuthServiceName,
 } from './repository/googleAuthService';
 import JWTService, { JWTServiceName } from './repository/jwtService';
+import { LoginOutputDto } from './dto/login.dto';
 
 @Injectable()
 export class IdentityService {
@@ -24,7 +25,7 @@ export class IdentityService {
     private jwtService: JWTService,
   ) {}
 
-  async login(token: string): Promise<string> {
+  async login(token: string): Promise<LoginOutputDto> {
     try {
       //verify that the token is valid
       const userDetails = await this.googleAuthService.verifyToken(token);
@@ -43,7 +44,10 @@ export class IdentityService {
       // generate an jwt access token for the user
       const jwtToken = await this.jwtService.sign(jwtPayload);
       // return token to the user to be sent for subsequent requests to server
-      return jwtToken;
+      return {
+        user: { email: user.email, username: user.username, image: user.image },
+        token: jwtToken,
+      };
     } catch (error) {
       return error;
     }
