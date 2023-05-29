@@ -49,7 +49,7 @@ export class IdentityService {
         token: jwtToken,
       };
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -64,7 +64,9 @@ export class IdentityService {
   async findByEmail(email: string): Promise<FindUserOutputDTO> {
     try {
       return await this.userRepository.findUserByEmail(email);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
   async update(
@@ -72,7 +74,9 @@ export class IdentityService {
   ): Promise<UpdateUserOutputDto> {
     try {
       return await this.userRepository.update(updateUserInputDto);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
   async remove(id: number) {
