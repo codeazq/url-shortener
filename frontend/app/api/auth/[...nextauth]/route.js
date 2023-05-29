@@ -14,8 +14,8 @@ const handler = NextAuth({
   ],
 
   callbacks: {
-    async signIn({ profile }) {
-      console.log(profile);
+    async signIn({ profile, account }) {
+      return true;
     },
 
     async jwt({ account, token }) {
@@ -30,14 +30,13 @@ const handler = NextAuth({
             token: tokenToVerifyOnBackend,
           }
         );
-
         token = axiosAuthresp.data;
       }
       return token;
     },
 
     async session({ session, token }) {
-      // the token here would be  the token returned from jwt callback
+      // the token here would be the token returned from jwt callback
       // add it to the session
       session.user = token.user;
       session.accessToken = token.token;
