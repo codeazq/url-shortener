@@ -7,13 +7,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
   const isUserLoggedIn = true;
-  console.log("before usesession");
   const { data: session } = useSession();
-
-  if (session) {
-    console.log("session.user");
-    console.log(session);
-  }
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
@@ -42,7 +36,7 @@ const Nav = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-short-link" className="black_btn">
+            <Link href="/short-links/create" className="black_btn">
               Create ShortLink
             </Link>
 
@@ -99,7 +93,7 @@ const Nav = () => {
                   My Profile
                 </Link>
                 <Link
-                  href="/create-short-link"
+                  href="/short-links/create"
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
