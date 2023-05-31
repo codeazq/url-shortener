@@ -1,4 +1,4 @@
 export class LoginOutputDto {
-  user: { email: string; username: string; image: string };
+  user: { id: bigint; email: string; username: string; image: string };
   token: string;
 }

@@ -45,7 +45,12 @@ export class IdentityService {
       const jwtToken = await this.jwtService.sign(jwtPayload);
       // return token to the user to be sent for subsequent requests to server
       return {
-        user: { email: user.email, username: user.username, image: user.image },
+        user: {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          image: user.image,
+        },
         token: jwtToken,
       };
     } catch (error) {
