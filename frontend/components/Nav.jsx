@@ -36,7 +36,8 @@ const Nav = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/short-links/create" className="black_btn">
+            {/* <Link href="/short-links/create" className="black_btn"> */}
+            <Link href="#" className="black_btn">
               Create ShortLink
             </Link>
 
