@@ -9,3 +9,5 @@ Shorten long URLs to create concise and easily shareable links.
 Redirect users to the original long URL when they access the shortened URL.
 
 Track the number of times a shortened URL has been accessed.
+
+The logo used in this project was created by crywill from <a href="https://thenounproject.com/browse/icons/term/link/" target="_blank" title="link Icons">Noun Project</a>

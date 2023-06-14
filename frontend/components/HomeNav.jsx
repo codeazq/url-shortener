@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
-const Nav = () => {
-  const isUserLoggedIn = true;
+const HomeNav = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -25,8 +24,8 @@ const Nav = () => {
         <Image
           src="/assets/images/logo.svg"
           alt="Short Up logo"
-          width={30}
-          height={30}
+          width={50}
+          height={50}
           className="object-contain"
         />
         <p className="logo_text">Short up</p>
@@ -37,23 +36,13 @@ const Nav = () => {
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             {/* <Link href="/short-links/create" className="black_btn"> */}
-            <Link href="#" className="black_btn">
-              Create ShortLink
+            <Link href="/dashboard/links" className="black_btn">
+              Dashboard
             </Link>
 
             <button type="button" onClick={signOut} className="outline_btn">
               Sign Out
             </button>
-
-            <Link href="/profile">
-              <Image
-                src={session?.user.image}
-                width={37}
-                height={37}
-                className="rounded-full"
-                alt="profile"
-              />
-            </Link>
           </div>
         ) : (
           <>
@@ -87,18 +76,11 @@ const Nav = () => {
             {toggleDropdown && (
               <div className="dropdown">
                 <Link
-                  href="/profile"
+                  href="/dashboard/links"
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  My Profile
-                </Link>
-                <Link
-                  href="/short-links/create"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Create ShortLink
+                  Dashboard
                 </Link>
                 <button
                   type="button"
@@ -133,4 +115,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default HomeNav;

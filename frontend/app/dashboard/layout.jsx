@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FaLink, FaBuromobelexperte } from "react-icons/fa";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 export default function Layout({ children }) {
+  const { data: session } = useSession();
+
   return (
     <div className="flex w-full min-h-screen font-sans text-gray-900 bg-gray-50">
       <aside className="py-6 px-10 w-56 border-r border-gray-200">
@@ -11,8 +16,8 @@ export default function Layout({ children }) {
           <Image
             src="/assets/images/logo.svg"
             alt="Short Up logo"
-            width={30}
-            height={30}
+            width={50}
+            height={50}
           />
         </Link>
 
@@ -40,7 +45,32 @@ export default function Layout({ children }) {
         </ul>
       </aside>
 
-      <main className="flex-1 pb-9">{children}</main>
+      <main className="flex-1 py-6">
+        <div className="flex flex-row-reverse px-10">
+          {session?.user ? (
+            <div className="flex gap-3 md:gap-5">
+              <button type="button" onClick={signOut} className="outline_btn">
+                Sign Out
+              </button>
+
+              <Link href="/profile">
+                <Image
+                  src={session?.user.image}
+                  width={37}
+                  height={37}
+                  className="rounded-full"
+                  alt="profile"
+                />
+              </Link>
+            </div>
+          ) : (
+            <>
+              <div>not signed in</div>
+            </>
+          )}
+        </div>
+        {children}
+      </main>
     </div>
   );
 }

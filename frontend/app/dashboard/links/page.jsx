@@ -34,6 +34,7 @@ const Links = () => {
     id: 0,
     url: "",
     alias: "",
+    published: true,
   });
   const [copied, setCopied] = useState("");
 
@@ -68,6 +69,7 @@ const Links = () => {
         {
           url: shortLinkData.url,
           alias: shortLinkData.alias,
+          published: shortLinkData.published,
         },
         {
           headers: {
@@ -100,6 +102,7 @@ const Links = () => {
         {
           url: shortLinkData.url,
           alias: shortLinkData.alias,
+          published: shortLinkData.published,
         },
         {
           headers: {
@@ -110,8 +113,6 @@ const Links = () => {
       );
 
       const data = response.data;
-      console.log("update data");
-      console.log(data);
       if (
         response.status == 200 ||
         response.status == 204 ||
@@ -122,6 +123,7 @@ const Links = () => {
           if (newShortLinks[i].id === shortLinkData.id) {
             newShortLinks[i].url = shortLinkData.url;
             newShortLinks[i].alias = shortLinkData.alias;
+            newShortLinks[i].published = shortLinkData.published;
           }
         }
         setShortLinks(newShortLinks);
@@ -209,7 +211,6 @@ const Links = () => {
         <button
           className="py-2.5 px-6 text-white bg-indigo-600 rounded-xl inline-flex gap-x-2 items-center hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
           onClick={() => {
-            console.log("button was clicked");
             setShortLinkAction("Create");
             setShowCreateModal(!showCreateModal);
           }}
@@ -319,6 +320,7 @@ const Links = () => {
                           id: shortLink.id,
                           url: shortLink.url,
                           alias: shortLink.alias,
+                          published: shortLink.published,
                         });
                         setShortLinkAction("Edit");
                         setShowCreateModal(true);
@@ -329,7 +331,6 @@ const Links = () => {
                     <button
                       className="p-2 hover:rounded-md hover:bg-gray-200"
                       onClick={() => {
-                        console.log("the delete was clicked");
                         handleDelete(shortLink);
                       }}
                     >
@@ -399,8 +400,6 @@ const Links = () => {
           }
         )}
         onClickCapture={(event) => {
-          console.log("event.target.id");
-          console.log(event.target.id);
           if (event.target.id == "create-link-modal") setShowCreateModal(false);
         }}
       >
@@ -470,20 +469,25 @@ const Links = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-start">
-                    <div className="flex items-center h-5">
+                    <label class="relative inline-flex items-center mb-4 cursor-pointer">
                       <input
-                        id="remember"
                         type="checkbox"
                         value=""
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                        required
+                        class="sr-only peer"
+                        checked={shortLinkData.published}
                       />
-                    </div>
-                    <label
-                      for="remember"
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                    >
-                      Remember me
+                      <div
+                        class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                        onClick={() =>
+                          setShortLinkData({
+                            ...shortLinkData,
+                            published: !shortLinkData.published,
+                          })
+                        }
+                      ></div>
+                      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Published
+                      </span>
                     </label>
                   </div>
                 </div>
