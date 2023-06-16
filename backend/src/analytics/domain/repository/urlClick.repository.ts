@@ -4,7 +4,9 @@ import {
 } from '../dto/CreateURLClickDto';
 import { FindURLClickOutputDto } from '../dto/FindURLClickDto';
 export default interface URLClickRepository {
-  create(CreateURLClickInputDto): Promise<CreateURLClickOutputDto>;
+  create(
+    createURLClickInputDto: CreateURLClickInputDto,
+  ): Promise<CreateURLClickOutputDto>;
   findByUrlId(id: bigint): Promise<FindURLClickOutputDto[]>;
 }
 

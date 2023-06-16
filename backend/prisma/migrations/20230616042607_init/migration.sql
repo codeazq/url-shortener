@@ -6,7 +6,7 @@ CREATE TABLE "short_links" (
     "published" BOOLEAN NOT NULL DEFAULT true,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "userId" BIGINT NOT NULL,
+    "user_id" BIGINT NOT NULL,
 
     CONSTRAINT "short_links_pkey" PRIMARY KEY ("id")
 );
@@ -34,4 +34,4 @@ CREATE INDEX "short_links_alias_idx" ON "short_links"("alias");
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "short_links" ADD CONSTRAINT "short_links_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "short_links" ADD CONSTRAINT "short_links_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
