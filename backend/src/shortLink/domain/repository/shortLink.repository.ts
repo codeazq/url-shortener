@@ -1,13 +1,13 @@
-import { FindShortLinkOutputDto } from '../dto/findShortLink.dto';
+import { FindShortLinkOutputDto } from './dto/findShortLink.dto';
 import {
   CreateShortLinkInputDto,
   CreateShortLinkOutputDto,
-} from '../dto/createShortLink.dto';
+} from './dto/createShortLink.dto';
 import {
   UpdateShortLinkInputDto,
   UpdateShortLinkOuptDto,
-} from '../dto/updateShortLink.dto';
-import { DeleteShortLinkOutputDto } from '../dto/deleteShortLink.dto';
+} from './dto/updateShortLink.dto';
+import { DeleteShortLinkOutputDto } from './dto/deleteShortLink.dto';
 
 export default interface ShortLinkRepository {
   create(data: CreateShortLinkInputDto): Promise<CreateShortLinkOutputDto>;

@@ -58,7 +58,6 @@ export class ShortLinkController {
     @Param('id') id: string,
   ): Promise<FindShortLinkResponseDto> {
     const userId = req.user.userId;
-    console.log(`user is: ${userId}`);
     return this.shortLinkService.findOne(+id, userId);
   }
 

@@ -3,13 +3,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import {
   CreateShortLinkInputDto,
   CreateShortLinkOutputDto,
-} from 'src/shortLink/domain/dto/createShortLink.dto';
-import { DeleteShortLinkOutputDto } from 'src/shortLink/domain/dto/deleteShortLink.dto';
-import { FindShortLinkOutputDto } from 'src/shortLink/domain/dto/findShortLink.dto';
+} from 'src/shortLink/domain/repository/dto/createShortLink.dto';
+import { DeleteShortLinkOutputDto } from 'src/shortLink/domain/repository/dto/deleteShortLink.dto';
+import { FindShortLinkOutputDto } from 'src/shortLink/domain/repository/dto/findShortLink.dto';
 import {
   UpdateShortLinkInputDto,
   UpdateShortLinkOuptDto,
-} from 'src/shortLink/domain/dto/updateShortLink.dto';
+} from 'src/shortLink/domain/repository/dto/updateShortLink.dto';
 import ShortLinkRepository from 'src/shortLink/domain/repository/shortLink.repository';
 import { Prisma } from '@prisma/client';
 

@@ -6,7 +6,6 @@ export class FindShortLinkOutputDto {
   userId: bigint;
   createdAt: Date;
   updatedAt: Date;
-  count: number;
 }
 
 export class HydrateShortLinksWithClicksCountInputDto {

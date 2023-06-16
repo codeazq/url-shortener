@@ -2,8 +2,9 @@ import URLClickRepository, {
   URLClickRepositoryName,
 } from './repository/urlClick.repository';
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateURLClickInputDto } from './dto/CreateURLClickDto';
-import { FindURLClickOutputDto } from './dto/FindURLClickDto';
+import { CreateURLClickInputDto } from './dto/createURLClickDto';
+import { FindURLClickOutputDto } from './dto/findURLClickDto';
+import { GetNoOfClicksByShortLinkIdOutputDto } from './dto/getNoOfClicksByShortLinkIdDto';
 import IpGeoLocationService, {
   GetGeoLocationOutputDto,
   IpGeoLocationServiceName,
@@ -32,7 +33,11 @@ export class AnalyticsService {
       const useragentData: ParserOutputDto =
         this.userAgentParserService.parser(userAgent);
 
-      this.create({ shortLinkId, ...geoLocationDetails, ...useragentData });
+      await this.create({
+        shortLinkId,
+        ...geoLocationDetails,
+        ...useragentData,
+      });
 
       return;
     } catch (error) {}
@@ -40,8 +45,18 @@ export class AnalyticsService {
 
   private async create(createURLClickInputDto: CreateURLClickInputDto) {
     try {
-      return 'This action adds a new analytics';
+      await this.urlClickRepository.create(createURLClickInputDto);
     } catch (error) {}
+  }
+
+  async getNoOfClicksByShortLinkIds(
+    ids: bigint[],
+  ): Promise<GetNoOfClicksByShortLinkIdOutputDto[]> {
+    try {
+      return await this.urlClickRepository.findNoOfClicksByShortLinkIds(ids);
+    } catch (error) {
+      throw error;
+    }
   }
 
   findAll() {

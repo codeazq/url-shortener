@@ -1,9 +1,10 @@
-import { FindShortLinkOutputDto } from 'src/shortLink/domain/dto/findShortLink.dto';
 import { Injectable, Inject } from '@nestjs/common/decorators';
 import ShortLinkRepository, {
   ShortLinkRepositoryName,
 } from './repository/shortLink.repository';
 import { AnalyticsService } from 'src/analytics/domain/analytics.service';
+import { StatusCodes } from 'http-status-codes';
+import { ShortLinkException } from 'src/utilities/ShortLinkException';
 
 @Injectable()
 export class RedirectService {
@@ -17,13 +18,20 @@ export class RedirectService {
     alias: string,
     ip: string,
     userAgent: string,
-  ): Promise<FindShortLinkOutputDto> {
+  ): Promise<{ url: string }> {
     try {
       const shortLink = await this.shortLinkRepository.findByAlias(alias);
 
+      if (!shortLink) {
+        throw new ShortLinkException(
+          'The shortLink not found',
+          StatusCodes.NOT_FOUND,
+        );
+      }
+
       this.analyticsService.logClick(shortLink.id, ip, userAgent);
 
-      return shortLink;
+      return { url: shortLink.url };
     } catch (error) {
       throw error;
     }
