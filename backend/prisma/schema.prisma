@@ -19,8 +19,9 @@ model ShortLink {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId BigInt @db.BigInt
+  user      User        @relation(fields: [userId], references: [id])
+  userId    BigInt      @db.BigInt
+  URLClicks URLClicks[]
 
   @@index([alias])
   @@map("short_links")
@@ -39,4 +40,22 @@ model User {
   ShortLink ShortLink[]
 
   @@map("users")
+}
+
+model URLClicks {
+  id          BigInt    @id @default(autoincrement()) @db.BigInt
+  counrtyName String
+  countryCode String
+  regionName  String
+  regionCode  String
+  city        String
+  device      String
+  os          String
+  browser     String
+  shortLinnk  ShortLink @relation(fields: [shortLinkId], references: [id])
+  shortLinkId BigInt    @db.BigInt
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("url_clicks")
 }
