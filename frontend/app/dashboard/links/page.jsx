@@ -296,7 +296,7 @@ const Links = () => {
                     </div>
                   </div>
                 </td>
-                <td className="font-medium text-center">12</td>
+                <td className="font-medium text-center">{shortLink.count}</td>
                 <td className="text-center">
                   <div className="flex items-center justify-center">
                     {shortLink.published ? (
