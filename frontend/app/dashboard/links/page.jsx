@@ -225,7 +225,7 @@ const Links = () => {
       <ul className="flex gap-x-24 items-center px-4 border-y border-gray-200">
         {filterItems.map((item, index) => {
           return (
-            <li>
+            <li key={index}>
               <button className="flex gap-x-2 items-center py-5 px-6 text-gray-500 hover:text-indigo-600 relative group">
                 {createElement(item.component, {
                   className: "w-6 h-6 fill-current",
@@ -256,7 +256,10 @@ const Links = () => {
         <tbody>
           {shortLinks.map((shortLink) => {
             return (
-              <tr className="hover:bg-gray-100 transition-colors group">
+              <tr
+                className="hover:bg-gray-100 transition-colors group"
+                key={shortLink.id}
+              >
                 <td className="flex gap-x-4 items-center py-4 pl-10">
                   <Image
                     src="/assets/images/atirira_in_laptop.png"
@@ -306,7 +309,7 @@ const Links = () => {
                     )}
                   </div>
                 </td>
-                <td class="text-center">
+                <td className="text-center">
                   <span className="inline-block w-20">
                     {dayjs(shortLink.createdAt).fromNow()}
                   </span>
@@ -351,6 +354,7 @@ const Links = () => {
         {[1, 2, 3, 4, 5].map((number) => {
           return (
             <button
+              key={number}
               className={cx(
                 "flex",
                 "items-center",
@@ -469,15 +473,16 @@ const Links = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-start">
-                    <label class="relative inline-flex items-center mb-4 cursor-pointer">
+                    <label className="relative inline-flex items-center mb-4 cursor-pointer">
                       <input
                         type="checkbox"
                         value=""
-                        class="sr-only peer"
+                        className="sr-only peer"
                         checked={shortLinkData.published}
+                        readOnly
                       />
                       <div
-                        class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                        className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                         onClick={() =>
                           setShortLinkData({
                             ...shortLinkData,
@@ -485,7 +490,7 @@ const Links = () => {
                           })
                         }
                       ></div>
-                      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                         Published
                       </span>
                     </label>
