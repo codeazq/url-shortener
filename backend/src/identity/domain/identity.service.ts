@@ -9,7 +9,9 @@ import UserRepository, {
 import GoogleAuthService, {
   GoogleAuthServiceName,
 } from './repository/googleAuthService';
+import { EmailVerificationException } from 'src/utilities/EmailVerificationException';
 import JWTService, { JWTServiceName } from './repository/jwtService';
+import { StatusCodes } from 'http-status-codes';
 import { LoginOutputDto } from './dto/login.dto';
 
 @Injectable()
@@ -86,5 +88,67 @@ export class IdentityService {
 
   async remove(id: number) {
     return `This action removes a #${id} identity`;
+  }
+
+  async sendEmailVerificationMail(userId: bigint | number) {
+    try {
+      const user = await this.userRepository.findUserById(userId);
+
+      const emailVerificationToken = this.generateTokenToVerifyEmail(
+        user.email,
+      );
+
+      //generate url with the front end
+
+      //
+      return emailVerificationToken;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async verifyEmailToken(token: string) {
+    try {
+      const tokenPayload = await this.jwtService.verify(
+        token,
+        process.env.EMAIL_VERIFICATION_TOKEN_SECRET,
+      );
+
+      if (!tokenPayload) {
+        throw new EmailVerificationException(
+          'This e-mail confirmation is invalid. Please issue a new e-mail confirmation request.',
+          StatusCodes.BAD_REQUEST,
+        );
+      }
+
+      const user = await this.userRepository.findUserByEmail(tokenPayload.sub);
+
+      if (user.emailVerifiedAt) return user;
+
+      return await this.userRepository.update({
+        email: tokenPayload.sub,
+        emailVerifiedAt: new Date(),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async generateTokenToVerifyEmail(email: string) {
+    try {
+      const payload = {
+        iss: process.env.APP_NAME || 'url_shortner',
+        sub: email,
+        exp23: new Date().getTime(),
+      };
+      const token = await this.jwtService.sign(
+        payload,
+        process.env.EMAIL_VERIFICATION_TOKEN_SECRET,
+      );
+
+      return token;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

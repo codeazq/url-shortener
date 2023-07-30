@@ -18,7 +18,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Url Shortner API')
     .setDescription(
-      'TThis is a URL shortener application. It allows users to shorten long URLs by create short, unique URL that redirects to the original long URL.',
+      'TThis is a URL shortener application. It allows users to shorten long URLs by creating short, unique URL that redirects to the original long URL.',
     )
     .setVersion('1.0')
     .addTag('url-shortener')
