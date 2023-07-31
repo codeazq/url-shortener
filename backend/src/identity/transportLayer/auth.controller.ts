@@ -32,12 +32,11 @@ export class AuthController {
     return this.identityService.verifyEmailToken(emailToken);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('verify_email')
-  // @ApiOkResponse({ type: any })
-  sendEmailVerification(): Promise<any> {
-    return this.identityService.generateTokenToVerifyEmail(
-      'testmail@testmail.com',
-    );
+  @ApiOkResponse({ type: String })
+  sendEmailVerification(@Request() req): Promise<string> {
+    const userId = req.user.userId;
+    return this.identityService.sendEmailVerificationMail(userId);
   }
 }

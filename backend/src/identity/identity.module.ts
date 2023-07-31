@@ -13,6 +13,7 @@ import { JWTServiceName } from './domain/repository/jwtService';
 import NestJWTService from './infrastructure/nestJwtService';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { AuthController } from './transportLayer/auth.controller';
+import { EmailModule } from 'src/services/email/email.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthController } from './transportLayer/auth.controller';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '3600s' },
     }),
+    EmailModule,
   ],
   controllers: [IdentityController, AuthController],
   providers: [
