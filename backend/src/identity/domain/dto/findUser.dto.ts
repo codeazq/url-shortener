@@ -4,6 +4,7 @@ export class FindUserOutputDTO {
   username: string;
   provider: string;
   image: string;
+  emailVerifiedAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }
