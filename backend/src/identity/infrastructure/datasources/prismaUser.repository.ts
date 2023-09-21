@@ -36,7 +36,9 @@ export default class PrismaUserRepository implements UserRepository {
       });
 
       return user;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async update(
@@ -51,6 +53,9 @@ export default class PrismaUserRepository implements UserRepository {
       data.username = updateUserInputDto.username;
     if (updateUserInputDto.image) data.email = updateUserInputDto.image;
 
+    if (updateUserInputDto.emailVerifiedAt)
+      data.emailVerifiedAt = updateUserInputDto.emailVerifiedAt;
+
     try {
       const user = await this.prismaService.user.update({
         where,
@@ -58,7 +63,9 @@ export default class PrismaUserRepository implements UserRepository {
       });
 
       return user;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
   async findUserByEmail(email: string): Promise<FindUserOutputDTO> {
     try {
@@ -67,6 +74,20 @@ export default class PrismaUserRepository implements UserRepository {
       });
 
       return user;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async findUserById(id: bigint | number): Promise<FindUserOutputDTO> {
+    try {
+      const user = await this.prismaService.user.findUnique({
+        where: { id },
+      });
+
+      return user;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

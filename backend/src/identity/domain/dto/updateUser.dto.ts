@@ -3,6 +3,7 @@ export class UpdateUserInputDto {
   email?: string;
   username?: string;
   image?: string;
+  emailVerifiedAt?: Date;
 }
 
 export class UpdateUserOutputDto {
@@ -11,6 +12,7 @@ export class UpdateUserOutputDto {
   username: string;
   provider: string;
   image: string;
+  emailVerifiedAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }

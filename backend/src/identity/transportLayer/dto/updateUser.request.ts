@@ -33,6 +33,9 @@ export class UpdateUserResponseDto {
   provider: string;
 
   @ApiProperty()
+  emailVerifiedAt: Date;
+
+  @ApiProperty()
   image: string;
 
   @ApiProperty()
